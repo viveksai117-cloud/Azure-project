@@ -14,7 +14,7 @@ pipeline {
 
         stage( 'Build') {
 
-            Steps {
+            steps {
 
                 echo "Project download successfully."
             
