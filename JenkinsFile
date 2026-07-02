@@ -12,13 +12,31 @@ pipeline {
             }
         }
 
-        stage( 'Build') {
+        stage( 'Download in Jenkins') {
 
             steps {
 
                 echo "Project download successfully."
             
              
+            }
+        }
+
+        stage( 'Deploy' ){
+            
+            steps{
+
+                sshPublisher(
+                    failOnError: true,
+                    publishers: [
+                        sshTransfer(
+                            sourceFiles: '**/*',
+                            removePrefix: '',
+                            remoteDirectory: '',
+                            execCommand: 'sudo systemctl reload nginx',
+                        )
+                    ]
+                )
             }
         }
     }
