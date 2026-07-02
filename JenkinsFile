@@ -28,8 +28,9 @@ pipeline {
                 sshPublisher(
                     failOnError: true,
                     publishers: [
-                        bapSshPublisher(
+                        sshPublisherDesc(
                             configName: 'AzureVM',
+                            verbose: true,
                             transfers: [
                                 sshTransfer(
                                     sourceFiles: '**/*',
