@@ -18,26 +18,31 @@ pipeline {
 
                 echo "Project download successfully."
             
-             
+            
             }
         }
 
         stage( 'Deploy' ){
             
             steps{
-
                 sshPublisher(
                     failOnError: true,
                     publishers: [
-                        sshTransfer(
-                            sourceFiles: '**/*',
-                            removePrefix: '',
-                            remoteDirectory: '',
-                            execCommand: 'sudo systemctl reload nginx',
+                        bapSshPublisher(
+                            configName: 'AzureVM',
+                            transfers: [
+                                sshTransfer(
+                                    sourceFiles: '**/*',
+                                    removePrefix: '',
+                                    remoteDirectory: '',
+                                    execCommand: 'sudo systemctl reload nginx'
+                                )
+                            ]
                         )
                     ]
                 )
             }
         }
+
     }
 }
